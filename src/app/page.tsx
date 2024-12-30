@@ -1,19 +1,5 @@
-import Link from "next/link";
-
-const libraries = [
-  {
-    id: "ui",
-    name: "DX UI",
-    description: "Beautiful and accessible React components for better user interfaces",
-    href: "/libraries/ui",
-  },
-  {
-    id: "hooks",
-    name: "DX Hooks",
-    description: "A collection of React hooks for common use cases",
-    href: "/libraries/hooks",
-  },
-];
+import { LIBRARIES } from '@/constants/libraries'
+import Link from 'next/link'
 
 export default function HomePage() {
   return (
@@ -23,35 +9,40 @@ export default function HomePage() {
           <h1 className="font-bold text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
             High-quality libraries for
             <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
-              {" "}better DX
+              {' '}
+              better DX
             </span>
           </h1>
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-            A collection of libraries to improve your development experience. Built with modern tools and best practices.
+            A collection of libraries to improve your development experience. Built with modern
+            tools and best practices.
           </p>
         </div>
       </section>
       <section className="container space-y-6 py-8 md:py-12 lg:py-24">
         <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem]">
-          {libraries.map((lib) => (
-            <Link
-              key={lib.id}
-              href={lib.href}
-              className="relative overflow-hidden rounded-lg border bg-background p-2 hover:border-foreground transition-colors"
-            >
-              <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-                <div className="space-y-2">
-                  <h3 className="font-bold text-2xl">{lib.name}</h3>
-                  <p className="text-muted-foreground">{lib.description}</p>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Learn more →</span>
-                </div>
-              </div>
-            </Link>
-          ))}
+          {Object.values(LIBRARIES).map(
+            (lib) =>
+              !lib?.comingSoon && (
+                <Link
+                  key={lib.id}
+                  href={lib.href}
+                  className="relative overflow-hidden rounded-lg border bg-background p-2 hover:border-foreground transition-colors"
+                >
+                  <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+                    <div className="space-y-2">
+                      <h3 className="font-bold text-2xl">{lib.name}</h3>
+                      <p className="text-muted-foreground">{lib.description}</p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">Learn more →</span>
+                    </div>
+                  </div>
+                </Link>
+              ),
+          )}
         </div>
       </section>
     </div>
-  );
+  )
 }
