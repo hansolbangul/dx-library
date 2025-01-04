@@ -3,7 +3,7 @@ import { SOCIAL_LINKS } from '@/constants/snsLinks'
 
 export function Footer() {
   return (
-    <footer className="border-t">
+    <footer className="border-t md:pl-[240px]">
       <div className="container flex flex-col items-center gap-4 py-10 md:h-24 md:flex-row md:py-0">
         <div className="flex flex-1 items-center justify-center md:justify-start">
           <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">

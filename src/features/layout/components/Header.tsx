@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { LibraryDropdown } from './LibraryDropdown'
 import { fadeIn } from '../animations/variants'
 import { SOCIAL_LINKS } from '@/constants/snsLinks'
+import ThemeToggle from './ThemeToggle'
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <Link
@@ -32,8 +33,6 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
 )
 
 export const Header = () => {
-  const { theme, setTheme } = useTheme()
-
   return (
     <motion.header
       initial="hidden"
@@ -66,22 +65,7 @@ export const Header = () => {
             <NavLink href={SOCIAL_LINKS.portfolio}>Profile</NavLink>
           </nav>
           <div className="ml-2">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-input bg-background shadow-sm hover:bg-accent"
-            >
-              <motion.span
-                key={theme}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.15 }}
-              >
-                {theme === 'light' ? '🌙' : '☀️'}
-              </motion.span>
-            </motion.button>
+            <ThemeToggle />
           </div>
         </div>
       </div>
