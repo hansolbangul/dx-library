@@ -32,12 +32,27 @@ DX generate-router는 Next.js 애플리케이션에서 타입 안전한 라우�
           title: '설치',
           description: 'DX generate-router 시작하기',
           content: `
-DX generate-router를 설치하고 프로젝트에서 사용하는 방법을 알아보겠습니다.
-
 ## 시스템 요구사항
 
 - Node.js 16.0.0 이상
 - Next.js 13.0.0 이상
+
+## 패키지 매니저
+
+### npm
+\`\`\`bash
+npm install @dx-library/generate-router
+\`\`\`
+
+### yarn
+\`\`\`bash
+yarn add @dx-library/generate-router
+\`\`\`
+
+### pnpm
+\`\`\`bash
+pnpm add @dx-library/generate-router
+\`\`\`
 `,
         },
       },
@@ -212,7 +227,7 @@ DX UI는 Radix UI 프리미티브를 기반으로 구축된 현대적인 React �
     href: '/libraries/hooks',
     sections: [
       {
-        title: 'Introduction',
+        title: '개요',
         href: '/libraries/hooks',
         content: {
           title: 'DX Hooks',

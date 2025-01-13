@@ -1,15 +1,10 @@
 'use client'
 
 import { useParams } from 'next/navigation'
-import { Sidebar, MobileNav } from "@/features/libraries/components/Sidebar"
+import { Sidebar, MobileNav } from '@/features/libraries/components/Sidebar'
 import { LIBRARIES } from '@/constants/libraries'
 
-
-export default function LibraryLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function LibraryLayout({ children }: { children: React.ReactNode }) {
   const params = useParams()
   const id = params.id as string
   const library = LIBRARIES[id as keyof typeof LIBRARIES]
@@ -22,10 +17,8 @@ export default function LibraryLayout({
       <div className="flex-1">
         <div className="container flex-1 md:gap-6 lg:gap-10">
           <Sidebar />
-          <main className="relative py-6 md:gap-10">
-            <div className="mx-auto w-full">
-              {children}
-            </div>
+          <main className="relative py-6 md:gap-10 md:pl-[240px]">
+            <div className="mx-auto w-full">{children}</div>
           </main>
         </div>
       </div>

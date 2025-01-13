@@ -34,9 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           <div className="relative flex min-h-screen flex-col">
             <Header />
-            <main className="flex-1 transition-all duration-200 md:pl-[240px]">
-              {children}
-            </main>
+            <main className="flex-1 transition-all duration-200">{children}</main>
             <Footer />
           </div>
         </ThemeProvider>
