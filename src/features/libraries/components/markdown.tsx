@@ -1,6 +1,8 @@
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
+import cn from 'classnames'
+import 'highlight.js/styles/github-dark.css' // 구문 강조 스타일 추가
 
 interface MarkdownProps {
   content: string
@@ -85,13 +87,14 @@ export function Markdown({ content }: MarkdownProps) {
 
         // 코드 블록 스타일링
         pre: ({ node, ...props }) => (
-          <pre
-            className="mb-6 mt-4 overflow-x-auto rounded-lg bg-gray-900 p-4 dark:bg-gray-800"
-            {...props}
-          />
+          <pre className="relative mb-6 mt-4 overflow-x-auto rounded-lg p-4 dark:bg-gray-900">
+            <div className="absolute right-4 top-4 text-xs text-gray-400">
+              {props.children?.props?.className?.replace('language-', '') || ''}
+            </div>
+            {props.children}
+          </pre>
         ),
         code: ({ node, inline, className, children, ...props }) => {
-          console.log(node, inline, className, children, props)
           const match = /language-(\w+)/.exec(className || '')
           const language = match ? match[1] : ''
 
@@ -105,7 +108,7 @@ export function Markdown({ content }: MarkdownProps) {
             </code>
           ) : (
             // 코드 블록
-            <code className="block font-mono text-sm text-gray-200" {...props}>
+            <code className={cn('block font-mono text-sm')} {...props}>
               {typeof children === 'string' ? children.trim() : children}
             </code>
           )
