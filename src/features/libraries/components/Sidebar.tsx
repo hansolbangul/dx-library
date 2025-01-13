@@ -32,7 +32,14 @@ function SidebarContent() {
                   : 'transparent',
               )}
             >
-              {item.title}
+              <div className="flex items-center gap-2">
+                <span>{item.title}</span>
+                {library.comingSoon && (
+                  <span className="ml-auto text-xs font-medium text-muted-foreground">
+                    Coming soon
+                  </span>
+                )}
+              </div>
             </Link>
           ))}
         </div>
@@ -48,7 +55,7 @@ export function Sidebar() {
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className="fixed top-[var(--header-height)] left-0 hidden h-[calc(100vh-var(--header-height))] w-[240px] border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:block">
+      <div className="fixed z-10 top-[var(--header-height)] left-0 hidden h-[calc(100vh-var(--header-height))] w-[240px] border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:block">
         <div className="flex h-full flex-col">
           <SidebarContent />
         </div>

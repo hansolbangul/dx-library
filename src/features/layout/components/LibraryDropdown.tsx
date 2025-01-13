@@ -39,13 +39,13 @@ export function LibraryDropdown() {
             animate="open"
             exit="closed"
             variants={dropdownVariants}
-            className="absolute left-0 right-0 sm:left-0 sm:right-auto top-[calc(100%+0.5rem)] w-auto sm:min-w-[280px] rounded-md border bg-background/95 p-2 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-lg z-50"
+            className="fixed sm:absolute left-0 right-0 sm:right-auto top-[calc(100%+0.5rem)] w-screen sm:w-auto sm:min-w-[280px] rounded-none sm:rounded-md border bg-background shadow-lg z-50"
           >
             <motion.div
               variants={staggerContainer}
               initial="hidden"
               animate="show"
-              className="grid gap-1"
+              className="grid gap-1 p-2"
             >
               {Object.values(LIBRARIES).map((lib) => (
                 <motion.div key={lib.id} variants={staggerItem}>
@@ -54,17 +54,20 @@ export function LibraryDropdown() {
                     className="relative flex select-none items-center rounded-sm px-3 py-2.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                     onClick={() => setIsOpen(false)}
                   >
-                    <div className="flex flex-col">
-                      <span className="font-medium">{lib.name}</span>
+                    <div className="flex flex-1 flex-col min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{lib.name}</span>
+                        {lib.comingSoon && (
+                          <span className="inline-flex items-center gap-1">
+                            <span className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
+                            <span className="text-[10px] font-medium text-muted-foreground">Soon</span>
+                          </span>
+                        )}
+                      </div>
                       <span className="text-xs text-muted-foreground line-clamp-1">
                         {lib.description}
                       </span>
                     </div>
-                    {lib.comingSoon && (
-                      <span className="ml-auto text-xs font-medium text-muted-foreground">
-                        Coming soon
-                      </span>
-                    )}
                   </Link>
                 </motion.div>
               ))}

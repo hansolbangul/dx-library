@@ -59,11 +59,13 @@ export const librarySchema = z.object({
   name: z.string(),
   description: z.string(),
   href: z.string(),
+  comingSoon: z.boolean().optional(),
   sections: z.array(sectionSchema),
   features: z.array(z.string()).optional(),
   installation: installationSchema.optional(),
   peer: peerSchema.optional(),
-  comingSoon: z.boolean().optional(),
+  github: z.string().optional(),
+  demo: z.string().optional(),
   content: libraryContentSchema.optional(),
 })
 
