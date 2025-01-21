@@ -21,26 +21,23 @@ export default function HomePage() {
       </section>
       <section className="container space-y-6 py-8 md:py-12 lg:py-24">
         <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem]">
-          {Object.values(LIBRARIES).map(
-            (lib) =>
-              !lib?.comingSoon && (
-                <Link
-                  key={lib.id}
-                  href={lib.href}
-                  className="relative overflow-hidden rounded-lg border bg-background p-2 hover:border-foreground transition-colors"
-                >
-                  <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-                    <div className="space-y-2">
-                      <h3 className="font-bold text-2xl">{lib.name}</h3>
-                      <p className="text-muted-foreground">{lib.description}</p>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Learn more →</span>
-                    </div>
-                  </div>
-                </Link>
-              ),
-          )}
+          {Object.values(LIBRARIES).map((lib) => (
+            <Link
+              key={lib.id}
+              href={lib.href}
+              className="relative overflow-hidden rounded-lg border bg-background p-2 hover:border-foreground transition-colors"
+            >
+              <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+                <div className="space-y-2">
+                  <h3 className="font-bold text-2xl">{lib.name}</h3>
+                  <p className="text-muted-foreground">{lib.description}</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">Learn more →</span>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
     </div>
