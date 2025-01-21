@@ -1,21 +1,44 @@
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { LIBRARIES } from '@/constants/libraries'
 import { Markdown } from '@/features/libraries/components/markdown'
 
-interface PageProps {
-  params: {
-    id: string
+type Props = {
+  params: Promise<{ id: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolvedParams = await params
+  const library = LIBRARIES[resolvedParams.id as keyof typeof LIBRARIES]
+
+  if (!library) {
+    return {
+      title: 'Library Not Found',
+    }
+  }
+
+  const introSection = library.sections.find((s) => s.href === '/libraries/' + resolvedParams.id)
+
+  if (!introSection || !introSection.content) {
+    return {
+      title: 'Section Not Found',
+    }
+  }
+
+  return {
+    title: `${introSection.content.title} - DX Library`,
+    description: introSection.content.description,
   }
 }
 
-export default async function LibraryPage({ params }: PageProps) {
-  const id = (await params).id
-  const library = LIBRARIES[id as keyof typeof LIBRARIES]
+export default async function Page({ params }: Props) {
+  const resolvedParams = await params
+  const library = LIBRARIES[resolvedParams.id as keyof typeof LIBRARIES]
   if (!library) {
     notFound()
   }
 
-  const introSection = library.sections.find((s) => s.href === '/libraries/' + id)
+  const introSection = library.sections.find((s) => s.href === '/libraries/' + resolvedParams.id)
   if (!introSection || !introSection.content) {
     notFound()
   }
@@ -52,34 +75,17 @@ export default async function LibraryPage({ params }: PageProps) {
                 GitHub
               </a>
             )}
-            {library.demo && (
+            {library.installation?.npm && (
               <a
-                href={library.demo}
+                href={`https://www.npmjs.com/package/${library.installation.npm}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+                className="inline-flex items-center gap-1 rounded-md bg-accent px-3 py-2 text-sm font-medium hover:bg-accent/80"
               >
-                <svg
-                  className="h-4 w-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                  />
+                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z" />
                 </svg>
-                Demo
+                NPM
               </a>
             )}
           </div>

@@ -1,21 +1,47 @@
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { LIBRARIES } from '@/constants/libraries'
 import { Markdown } from '@/features/libraries/components/markdown'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string
+  }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const resolvedParams = await params
+  const library = LIBRARIES[resolvedParams.id as keyof typeof LIBRARIES]
+
+  if (!library) {
+    return {
+      title: 'Library Not Found',
+    }
+  }
+
+  const section = library.sections.find((s) => s.href === `/libraries/${resolvedParams.id}/components`)
+
+  if (!section || !section.content) {
+    return {
+      title: 'Components Not Found',
+    }
+  }
+
+  return {
+    title: `${section.content.title} - ${library.name}`,
+    description: section.content.description,
   }
 }
 
-export default async function ComponentsPage({ params }: PageProps) {
-  const id = (await params).id
-  const library = LIBRARIES[id as keyof typeof LIBRARIES]
+export default async function Page({ params }: PageProps) {
+  const resolvedParams = await params
+  const library = LIBRARIES[resolvedParams.id as keyof typeof LIBRARIES]
+
   if (!library || library.comingSoon) {
     notFound()
   }
 
-  const section = library.sections.find((s) => s.href === `/libraries/${id}/components`)
+  const section = library.sections.find((s) => s.href === `/libraries/${resolvedParams.id}/components`)
   if (!section || !section.content) {
     notFound()
   }
@@ -50,17 +76,14 @@ export default async function ComponentsPage({ params }: PageProps) {
                   <div key={propIndex} className="rounded-lg border p-4">
                     <div className="flex items-center gap-2">
                       <code className="rounded bg-muted px-2 py-1">{prop.name}</code>
-                      <span className="text-sm text-muted-foreground">{prop.type}</span>
+                      <span className="text-sm text-muted-foreground">Promise&lt;{prop.type}&gt;</span>
                       {prop.required && (
-                        <span className="rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-600 dark:bg-red-900/30 dark:text-red-400">
-                          Required
-                        </span>
+                        <span className="text-sm text-red-500">Required</span>
                       )}
                     </div>
-                    <p className="mt-2 text-sm text-muted-foreground">{prop.description}</p>
-                    {prop.default && (
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        Default: <code className="text-xs">{prop.default}</code>
+                    {prop.description && (
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        {prop.description}
                       </p>
                     )}
                   </div>

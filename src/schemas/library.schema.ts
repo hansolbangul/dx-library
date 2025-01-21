@@ -20,8 +20,15 @@ export const componentSchema = z.object({
       }),
     )
     .optional(),
+  returns: z
+    .object({
+      type: z.string(),
+      description: z.string().optional(),
+    })
+    .optional(),
   examples: z.array(codeExampleSchema).optional(),
 })
+
 export const sectionContentSchema = z.object({
   title: z.string(),
   description: z.string().optional(),

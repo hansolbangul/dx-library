@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { useTheme } from 'next-themes'
 import { motion } from 'framer-motion'
 import { LibraryDropdown } from './LibraryDropdown'
 import { fadeIn } from '../animations/variants'

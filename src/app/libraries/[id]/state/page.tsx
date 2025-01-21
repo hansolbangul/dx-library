@@ -1,21 +1,44 @@
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { LIBRARIES } from '@/constants/libraries'
 import { Markdown } from '@/features/libraries/components/markdown'
 
-interface PageProps {
-  params: {
-    id: string
+type Props = {
+  params: Promise<{ id: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolvedParams = await params
+  const library = LIBRARIES[resolvedParams.id as keyof typeof LIBRARIES]
+
+  if (!library) {
+    return {
+      title: 'Library Not Found',
+    }
+  }
+
+  const section = library.sections.find((s) => s.href === `/libraries/${resolvedParams.id}/state`)
+
+  if (!section || !section.content) {
+    return {
+      title: 'State Not Found',
+    }
+  }
+
+  return {
+    title: `${section.content.title} - ${library.name}`,
+    description: section.content.description,
   }
 }
 
-export default async function StatePage({ params }: PageProps) {
-  const id = (await params).id
-  const library = LIBRARIES[id as keyof typeof LIBRARIES]
+export default async function Page({ params }: Props) {
+  const resolvedParams = await params
+  const library = LIBRARIES[resolvedParams.id as keyof typeof LIBRARIES]
   if (!library || library.comingSoon) {
     notFound()
   }
 
-  const section = library.sections.find((s) => s.href === `/libraries/${id}/state`)
+  const section = library.sections.find((s) => s.href === `/libraries/${resolvedParams.id}/state`)
   if (!section || !section.content) {
     notFound()
   }
@@ -50,15 +73,12 @@ export default async function StatePage({ params }: PageProps) {
                       <code className="rounded bg-muted px-2 py-1">{prop.name}</code>
                       <span className="text-sm text-muted-foreground">{prop.type}</span>
                       {prop.required && (
-                        <span className="rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-600 dark:bg-red-900/30 dark:text-red-400">
-                          Required
-                        </span>
+                        <span className="text-sm text-red-500">Required</span>
                       )}
                     </div>
-                    <p className="mt-2 text-sm text-muted-foreground">{prop.description}</p>
-                    {prop.default && (
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        Default: <code className="text-xs">{prop.default}</code>
+                    {prop.description && (
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        {prop.description}
                       </p>
                     )}
                   </div>
@@ -67,41 +87,23 @@ export default async function StatePage({ params }: PageProps) {
             </div>
           )}
 
-          {component.examples && component.examples.length > 0 && (
+          {component.returns && (
             <div className="space-y-4">
-              <h3 className="text-xl font-medium">Examples</h3>
-              <div className="grid gap-6">
-                {component.examples.map((example, exampleIndex) => (
-                  <div key={exampleIndex} className="space-y-2">
-                    <h4 className="text-lg font-medium">{example.title}</h4>
-                    <p className="text-muted-foreground">{example.description}</p>
-                    <pre className="rounded-lg bg-muted p-4 overflow-x-auto">
-                      <code className="text-sm">{example.code}</code>
-                    </pre>
-                  </div>
-                ))}
+              <h3 className="text-xl font-medium">Returns</h3>
+              <div className="rounded-lg border p-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">{component.returns.type}</span>
+                </div>
+                {component.returns.description && (
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {component.returns.description}
+                  </p>
+                )}
               </div>
             </div>
           )}
         </div>
       ))}
-
-      {section.content.examples?.length > 0 && (
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold tracking-tight">Examples</h2>
-          <div className="grid gap-6">
-            {section.content.examples.map((example, index) => (
-              <div key={index} className="space-y-2">
-                <h3 className="text-lg font-medium">{example.title}</h3>
-                <p className="text-muted-foreground">{example.description}</p>
-                <pre className="rounded-lg bg-muted p-4 overflow-x-auto">
-                  <code className="text-sm">{example.code}</code>
-                </pre>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   )
 }

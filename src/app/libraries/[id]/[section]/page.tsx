@@ -1,23 +1,49 @@
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { LIBRARIES } from '@/constants/libraries'
 import { Markdown } from '@/features/libraries/components/markdown'
 
-interface PageProps {
-  params: {
-    id: string
-    section: string
+type Props = {
+  params: Promise<{ id: string; section: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolvedParams = await params
+  const library = LIBRARIES[resolvedParams.id as keyof typeof LIBRARIES]
+
+  if (!library) {
+    return {
+      title: 'Section Not Found',
+    }
+  }
+
+  const sectionData = library.sections.find(
+    (s) => s.href === `/libraries/${resolvedParams.id}/${resolvedParams.section}`,
+  )
+
+  if (!sectionData || !sectionData.content) {
+    return {
+      title: 'Section Not Found',
+    }
+  }
+
+  return {
+    title: `${sectionData.content.title} - ${library.name}`,
+    description: sectionData.content.description,
   }
 }
 
-export default async function SectionPage({ params }: PageProps) {
-  const { id, section } = params
-  const library = LIBRARIES[id as keyof typeof LIBRARIES]
+export default async function Page({ params }: Props) {
+  const resolvedParams = await params
+  const library = LIBRARIES[resolvedParams.id as keyof typeof LIBRARIES]
 
   if (!library) {
     notFound()
   }
 
-  const sectionData = library.sections.find((s) => s.href === `/libraries/${id}/${section}`)
+  const sectionData = library.sections.find(
+    (s) => s.href === `/libraries/${resolvedParams.id}/${resolvedParams.section}`,
+  )
 
   if (!sectionData || !sectionData.content) {
     notFound()
