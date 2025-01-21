@@ -3,15 +3,38 @@ import { LIBRARIES } from '@/constants/libraries'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: '더 나은 DX를 위한 고품질 라이브러리',
-  description: '현대적인 도구와 모범 사례로 구축된 개발자 경험 향상을 위한 라이브러리 모음입니다.',
+  title: {
+    default: 'DX 라이브러리',
+    template: '%s - DX 라이브러리',
+  },
+  description: '개발자 경험을 향상시키기 위한 라이브러리 모음',
+  keywords: ['개발자 경험', '라이브러리', 'DX', '오픈소스'],
+  authors: [{ name: 'DX 라이브러리 팀' }],
+  creator: 'DX 라이브러리 팀',
   openGraph: {
-    title: '더 나은 DX를 위한 고품질 라이브러리',
-    description: '현대적인 도구와 모범 사례로 구축된 개발자 경험 향상을 위한 라이브러리 모음입니다.',
+    type: 'website',
+    locale: 'ko_KR',
+    url: 'https://dx-library.hansolbangul.com',
+    title: 'DX 라이브러리',
+    description: '개발자 경험을 향상시키기 위한 라이브러리 모음',
+    siteName: 'DX 라이브러리',
+    images: [
+      {
+        url: 'https://dx-library.hansolbangul.com/dx-library.png',
+        width: 1200,
+        height: 630,
+        alt: 'DX 라이브러리 썸네일',
+      },
+    ],
   },
   twitter: {
-    title: '더 나은 DX를 위한 고품질 라이브러리',
-    description: '현대적인 도구와 모범 사례로 구축된 개발자 경험 향상을 위한 라이브러리 모음입니다.',
+    card: 'summary_large_image',
+    title: 'DX 라이브러리',
+    description: '개발자 경험을 향상시키기 위한 라이브러리 모음',
+    images: ['https://dx-library.hansolbangul.com/dx-library.webp'],
+  },
+  icons: {
+    icon: '/favicon.ico',
   },
 }
 
