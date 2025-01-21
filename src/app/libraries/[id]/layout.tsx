@@ -1,27 +1,43 @@
-'use client'
-
-import { useParams } from 'next/navigation'
-import { Sidebar, MobileNav } from '@/features/libraries/components/Sidebar'
+import { Metadata } from 'next'
 import { LIBRARIES } from '@/constants/libraries'
+import ClientLayout from './client-layout'
 
-export default function LibraryLayout({ children }: { children: React.ReactNode }) {
-  const params = useParams()
-  const id = params.id as string
-  const library = LIBRARIES[id as keyof typeof LIBRARIES]
+interface Props {
+  children: React.ReactNode
+  params: { id: string }
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const library = LIBRARIES[params.id as keyof typeof LIBRARIES]
+
+  if (!library) {
+    return {
+      title: 'Library Not Found',
+      description: 'The requested library could not be found.',
+    }
+  }
+
+  return {
+    title: `${library.name} - DX Library`,
+    description: library.description,
+    openGraph: {
+      title: library.name,
+      description: library.description,
+      type: 'article',
+      url: `https://dx-library.hansolbangul.com/libraries/${params.id}`,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: library.name,
+      description: library.description,
+    },
+  }
+}
+
+export default function LibraryLayout({ children, params }: Props) {
+  const library = LIBRARIES[params.id as keyof typeof LIBRARIES]
 
   if (!library) return null
 
-  return (
-    <div className="relative flex min-h-screen flex-col">
-      <MobileNav />
-      <div className="flex-1">
-        <div className="container flex-1 md:gap-6 lg:gap-10">
-          <Sidebar />
-          <main className="relative py-6 md:gap-10 md:pl-[240px]">
-            <div className="mx-auto w-full">{children}</div>
-          </main>
-        </div>
-      </div>
-    </div>
-  )
+  return <ClientLayout>{children}</ClientLayout>
 }
