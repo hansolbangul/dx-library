@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: 'DX 라이브러리',
     images: [
       {
-        url: 'https://dx-library.hansolbangul.com/dx-library.webp',
+        url: 'https://dx-library.hansolbangul.com/dx-library.png',
         width: 1200,
         height: 630,
         alt: 'DX 라이브러리 썸네일',

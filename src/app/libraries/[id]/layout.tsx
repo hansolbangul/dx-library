@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `https://dx-library.hansolbangul.com/libraries/${params.id}`,
       images: [
         {
-          url: 'https://dx-library.hansolbangul.com/dx-library.webp',
+          url: 'https://dx-library.hansolbangul.com/dx-library.png',
           width: 1200,
           height: 630,
           alt: `${library.name} 썸네일`,
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: library.name,
       description: library.description,
-      images: ['https://dx-library.hansolbangul.com/dx-library.webp'],
+      images: ['https://dx-library.hansolbangul.com/dx-library.png'],
     },
   }
 }
