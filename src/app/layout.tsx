@@ -27,15 +27,24 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    url: 'https://dx-library.vercel.app',
+    url: 'https://dx-library.hansolbangul.com',
     title: 'DX 라이브러리',
     description: '개발자 경험을 향상시키기 위한 라이브러리 모음',
     siteName: 'DX 라이브러리',
+    images: [
+      {
+        url: 'https://dx-library.hansolbangul.com/dx-library.webp',
+        width: 1200,
+        height: 630,
+        alt: 'DX 라이브러리 썸네일',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'DX 라이브러리',
     description: '개발자 경험을 향상시키기 위한 라이브러리 모음',
+    images: ['https://dx-library.hansolbangul.com/dx-library.webp'],
   },
   icons: {
     icon: '/favicon.ico',
