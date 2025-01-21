@@ -16,8 +16,30 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'DX Library',
-  description: 'A collection of libraries for better developer experience',
+  title: {
+    default: 'DX 라이브러리',
+    template: '%s - DX 라이브러리',
+  },
+  description: '개발자 경험을 향상시키기 위한 라이브러리 모음',
+  keywords: ['개발자 경험', '라이브러리', 'DX', '오픈소스'],
+  authors: [{ name: 'DX 라이브러리 팀' }],
+  creator: 'DX 라이브러리 팀',
+  openGraph: {
+    type: 'website',
+    locale: 'ko_KR',
+    url: 'https://dx-library.vercel.app',
+    title: 'DX 라이브러리',
+    description: '개발자 경험을 향상시키기 위한 라이브러리 모음',
+    siteName: 'DX 라이브러리',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'DX 라이브러리',
+    description: '개발자 경험을 향상시키기 위한 라이브러리 모음',
+  },
+  icons: {
+    icon: '/favicon.ico',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

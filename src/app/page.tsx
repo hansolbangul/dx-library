@@ -1,5 +1,19 @@
+import { Metadata } from 'next'
 import { LIBRARIES } from '@/constants/libraries'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: '더 나은 DX를 위한 고품질 라이브러리',
+  description: '현대적인 도구와 모범 사례로 구축된 개발자 경험 향상을 위한 라이브러리 모음입니다.',
+  openGraph: {
+    title: '더 나은 DX를 위한 고품질 라이브러리',
+    description: '현대적인 도구와 모범 사례로 구축된 개발자 경험 향상을 위한 라이브러리 모음입니다.',
+  },
+  twitter: {
+    title: '더 나은 DX를 위한 고품질 라이브러리',
+    description: '현대적인 도구와 모범 사례로 구축된 개발자 경험 향상을 위한 라이브러리 모음입니다.',
+  },
+}
 
 export default function HomePage() {
   return (
