@@ -27,7 +27,6 @@ A collection of high-quality libraries designed to enhance the developer experie
 - [Next.js 15](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
-- [Shadcn UI](https://ui.shadcn.com/)
 - [Zod](https://zod.dev/)
 
 ## Contributing
